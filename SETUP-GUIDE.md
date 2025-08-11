@@ -10,15 +10,32 @@
 - Vercelアカウント
 - Supabaseアカウント
 
+## 0. プロジェクト名の設定
+
+まず最初に、作成するプロジェクトの名前を決めて、以下のコマンドで環境変数として設定します：
+
+```bash
+# プロジェクト名を設定（例：my-awesome-app）
+export PROJECT_NAME="your-project-name"
+
+# 設定確認
+echo "プロジェクト名: $PROJECT_NAME"
+```
+
+**注意:** プロジェクト名は以下の規則に従ってください：
+- 英数字とハイフン（-）のみ使用可能
+- 小文字で始まる
+- GitHubリポジトリ名としても使用可能な名前
+
 ## 1. プロジェクト初期化
 
 ### Next.jsプロジェクト作成
 ```bash
-# Next.jsアプリケーションを作成
-npx create-next-app@latest my-vercel-supabase-app --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"
+# 設定したプロジェクト名でNext.jsアプリケーションを作成
+npx create-next-app@latest $PROJECT_NAME --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"
 
 # プロジェクトディレクトリに移動
-cd my-vercel-supabase-app
+cd $PROJECT_NAME
 ```
 
 ### Supabase依存関係の追加
@@ -47,7 +64,7 @@ supabase login
 supabase orgs list
 
 # 本番プロジェクトを作成（組織IDとパスワードは適宜変更）
-supabase projects create my-app-prod --org-id YOUR_ORG_ID --db-password "SecurePass123!" --region ap-northeast-1
+supabase projects create ${PROJECT_NAME}-prod --org-id YOUR_ORG_ID --db-password "SecurePass123!" --region ap-northeast-1
 
 # プロジェクトをリンク（プロジェクトIDは作成時に表示）
 supabase link --project-ref YOUR_PROJECT_REF
@@ -216,9 +233,12 @@ git init
 git add .
 git commit -m "初期コミット"
 
-# GitHubでリポジトリを作成後
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+# GitHubでリポジトリを作成後（リポジトリ名は$PROJECT_NAMEを使用）
+git remote add origin https://github.com/YOUR_USERNAME/$PROJECT_NAME.git
 git push -u origin main
+
+# または、GitHub CLIを使用してリポジトリを自動作成
+gh repo create $PROJECT_NAME --public --source . --push
 ```
 
 ## 8. ドキュメント作成
@@ -274,5 +294,20 @@ npm run dev
 - [Vercel Documentation](https://vercel.com/docs)
 
 ---
+
+## プロジェクト名の使用例
+
+このガイドでは、`PROJECT_NAME` 環境変数を使用して以下のように動的に名前を設定します：
+
+```bash
+# 例：プロジェクト名を "my-todo-app" に設定
+export PROJECT_NAME="my-todo-app"
+```
+
+設定後、以下のような構成になります：
+- **Next.jsプロジェクト**: `my-todo-app/`
+- **Supabaseプロジェクト**: `my-todo-app-prod`
+- **GitHubリポジトリ**: `https://github.com/YOUR_USERNAME/my-todo-app`
+- **Vercelデプロイ**: `my-todo-app-xxx.vercel.app`
 
 このガイドに従って作業することで、開発環境と本番環境が分離された安全なNext.js + Supabase + Vercelアプリケーションが構築できます。
