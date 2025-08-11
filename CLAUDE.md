@@ -118,3 +118,50 @@ try {
 - 自動デプロイでmainブランチから反映
 
 **重要:** 開発時は `supabase start` を必ず実行してからローカル開発を開始してください。
+
+## プロジェクト構築履歴
+
+このプロジェクトは以下の手順で構築されました：
+
+### 1. 基盤構築
+1. **Next.jsアプリ作成**: `create-next-app`でTypeScript + Tailwind + App Routerのプロジェクト作成
+2. **Supabase統合**: `@supabase/supabase-js`をインストール、クライアント設定作成
+3. **接続テスト実装**: メインページにSupabase接続状況を表示する機能を追加
+
+### 2. Supabase設定
+1. **ローカル環境**: `supabase init`でローカルプロジェクト初期化
+2. **本番環境**: `supabase projects create`で本番プロジェクト作成（fiwlltohirxtgbjfmlfo）
+3. **プロジェクトリンク**: ローカルと本番プロジェクトを`supabase link`で連携
+
+### 3. 環境分離設定
+1. **開発環境**: `.env.local`をローカルSupabase（127.0.0.1:54321）用に設定
+2. **本番環境**: Vercelに本番Supabaseの環境変数を設定
+3. **自動切り替え**: ローカル開発とVercelデプロイで自動的に適切なSupabaseに接続
+
+### 4. Vercel連携
+1. **初回デプロイ**: `vercel`コマンドでプロジェクトをVercelに初期デプロイ
+2. **環境変数設定**: `vercel env add`で本番Supabase認証情報を設定
+3. **本番デプロイ**: `vercel --prod`で本番環境にデプロイ
+
+### 5. Git・GitHub設定
+1. **リポジトリ作成**: GitHubにリモートリポジトリを作成
+2. **初回プッシュ**: ローカルの変更をGitHubにプッシュ
+3. **継続的更新**: 機能追加のたびにコミット・プッシュを実行
+
+### 6. ドキュメント整備
+1. **CLAUDE.md作成**: Claude Code用のプロジェクトガイダンスを作成
+2. **README.md作成**: プロジェクト概要と環境構成を文書化
+3. **SETUP-GUIDE.md作成**: 一括構築手順書を作成
+
+### 構築完了後の状態
+- ✅ ローカル開発環境（Supabaseローカルスタック）
+- ✅ 本番環境（Vercelデプロイ + Supabaseクラウド）
+- ✅ 環境自動切り替え機能
+- ✅ 接続状況監視機能
+- ✅ 完全なドキュメント整備
+- ✅ GitHubリポジトリ管理
+
+### 参考ファイル
+- `SETUP-GUIDE.md`: 同様のプロジェクトを一から構築する完全手順書
+- `README.md`: プロジェクトの概要と環境構成
+- `supabase/config.toml`: Supabaseローカル設定
