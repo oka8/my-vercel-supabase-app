@@ -1,61 +1,76 @@
-# Vercel + Supabase ベースアプリ
+# My Vercel Supabase App
 
-Next.js、Vercel、Supabaseを使用したベースアプリケーションです。
+Next.js 15 + Supabase + Vercel で構築されたモダンWebアプリケーション
 
-## セットアップ
+## 環境構成
 
-1. 依存関係のインストール:
+### 開発環境 (ローカル)
+- **Supabase**: ローカルDocker環境 (http://127.0.0.1:54321)
+- **データベース**: PostgreSQL (ポート: 54322)
+- **認証**: Supabase Auth (ローカル)
+- **ファイル**: `.env.local` (ローカル用設定)
+
+### 本番環境 (Vercel)
+- **Supabase**: 本番プロジェクト (fiwlltohirxtgbjfmlfo)
+- **データベース**: Supabase Cloud (ap-northeast-1)
+- **認証**: Supabase Auth (本番)
+- **環境変数**: Vercelダッシュボードで管理
+
+## 開発開始
+
+### 1. 依存関係のインストール
 ```bash
 npm install
 ```
 
-2. Supabaseプロジェクトの設定:
-   - [Supabase](https://supabase.com/)でプロジェクトを作成
-   - プロジェクトのURL and API keyを取得
-
-3. 環境変数の設定:
+### 2. Supabaseローカル環境の起動
 ```bash
-cp .env.example .env.local
+supabase start
 ```
 
-`.env.local`ファイルを編集して、Supabaseの認証情報を設定:
-```
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url_here
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
-```
-
-4. 開発サーバーの起動:
+### 3. 開発サーバー起動
 ```bash
 npm run dev
 ```
 
-[http://localhost:3000](http://localhost:3000) でアプリを確認できます。
+## 環境の切り替え
 
-## Vercelへのデプロイ
+### ローカル開発環境
+- `.env.local` でローカルSupabaseを使用
+- `supabase start` でローカル環境が必要
 
-1. [Vercel](https://vercel.com/)にアカウントを作成
-2. GitHubリポジトリをVercelに接続
-3. 環境変数を設定
-4. デプロイ
+### 本番環境
+- Vercelの環境変数で本番Supabaseを使用
+- 自動デプロイでmainブランチから反映
 
-## 技術スタック
+## よく使うコマンド
 
-- **Next.js 15**: React フレームワーク
-- **TypeScript**: 型安全性
-- **Tailwind CSS**: スタイリング
-- **Supabase**: バックエンドサービス（データベース、認証など）
-- **Vercel**: ホスティングプラットフォーム
+```bash
+# 開発
+npm run dev          # 開発サーバー起動
+npm run build        # 本番ビルド
+npm run lint         # ESLint実行
 
-## 機能
+# Supabase
+supabase start       # ローカル環境起動
+supabase stop        # ローカル環境停止
+supabase status      # 状況確認
 
-- Supabase接続ステータスの表示
-- レスポンシブデザイン
-- ダークモード対応
+# デプロイ
+vercel --prod        # 本番デプロイ
+```
 
-## Learn More
+## プロジェクト構造
 
-Next.jsについて詳しく学ぶには:
+```
+src/app/           # Next.js App Routerページ
+lib/supabase.ts    # Supabaseクライアント設定
+supabase/          # Supabaseローカル設定
+CLAUDE.md          # Claude Code用ドキュメント
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - Next.jsの機能とAPI
-- [Learn Next.js](https://nextjs.org/learn) - インタラクティブなNext.jsチュートリアル
-- [Supabase Documentation](https://supabase.com/docs) - Supabaseの使い方
+## 注意事項
+
+- ローカル開発時は必ず `supabase start` を実行してください
+- 本番環境への変更は慎重に行ってください
+- 環境変数の設定ミスに注意してください
