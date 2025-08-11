@@ -14,9 +14,14 @@
 
 まず最初に、作成するプロジェクトの名前を決めて、以下のコマンドで環境変数として設定します：
 
+**推奨:** 現在のディレクトリ名をプロジェクト名として使用してください。
+
 ```bash
-# プロジェクト名を設定（例：my-awesome-app）
-export PROJECT_NAME="your-project-name"
+# 現在のディレクトリ名をプロジェクト名として設定（推奨）
+export PROJECT_NAME=$(basename "$PWD")
+
+# または手動でプロジェクト名を設定
+# export PROJECT_NAME="your-project-name"
 
 # 設定確認
 echo "プロジェクト名: $PROJECT_NAME"
@@ -26,6 +31,11 @@ echo "プロジェクト名: $PROJECT_NAME"
 - 英数字とハイフン（-）のみ使用可能
 - 小文字で始まる
 - GitHubリポジトリ名としても使用可能な名前
+- **推奨**: ディレクトリ名と統一する
+
+**Claude Code利用時の注意:**
+- プロンプトは日本語で入力してください
+- 指示や質問も日本語で行うことを推奨します
 
 ## 1. プロジェクト初期化
 
@@ -300,14 +310,23 @@ npm run dev
 このガイドでは、`PROJECT_NAME` 環境変数を使用して以下のように動的に名前を設定します：
 
 ```bash
-# 例：プロジェクト名を "my-todo-app" に設定
-export PROJECT_NAME="my-todo-app"
+# 推奨：現在のディレクトリ名を使用
+cd my-todo-app
+export PROJECT_NAME=$(basename "$PWD")  # "my-todo-app"が自動設定
+
+# または手動で設定
+# export PROJECT_NAME="my-todo-app"
 ```
 
 設定後、以下のような構成になります：
-- **Next.jsプロジェクト**: `my-todo-app/`
+- **作業ディレクトリ**: `my-todo-app/`
+- **Next.jsプロジェクト**: `my-todo-app/`（ディレクトリ名と統一）
 - **Supabaseプロジェクト**: `my-todo-app-prod`
 - **GitHubリポジトリ**: `https://github.com/YOUR_USERNAME/my-todo-app`
 - **Vercelデプロイ**: `my-todo-app-xxx.vercel.app`
+
+**Claude Code使用時の推奨事項:**
+- ディレクトリ名とプロジェクト名を統一することで管理が簡単になります
+- 日本語での質問や指示により、より自然なサポートを受けられます
 
 このガイドに従って作業することで、開発環境と本番環境が分離された安全なNext.js + Supabase + Vercelアプリケーションが構築できます。
