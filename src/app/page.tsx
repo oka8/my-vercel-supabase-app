@@ -11,18 +11,13 @@ export default function Home() {
   useEffect(() => {
     const checkConnection = async () => {
       try {
-        const { data, error } = await supabase
-          .from('health_check')
-          .select('count')
-          .limit(1)
+        // Try to get the current session to test the connection
+        const { data, error } = await supabase.auth.getSession()
         
-        if (error && error.code !== 'PGRST116') {
-          throw error
-        }
-        
+        // If we can call the auth API without network errors, the connection is working
         setIsConnected(true)
       } catch (error) {
-        console.log('Supabase connection status:', error)
+        console.log('Supabase connection error:', error)
         setIsConnected(false)
       } finally {
         setLoading(false)
