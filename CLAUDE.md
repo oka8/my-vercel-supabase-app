@@ -162,6 +162,51 @@ try {
 - ✅ GitHubリポジトリ管理
 
 ### 参考ファイル
-- `SETUP-GUIDE.md`: 同様のプロジェクトを一から構築する完全手順書
+- `SETUP-GUIDE.md`: 同様のプロジェクトを一から構築する完全手順書（動的プロジェクト名対応）
 - `README.md`: プロジェクトの概要と環境構成
 - `supabase/config.toml`: Supabaseローカル設定
+
+## リージョン設定
+
+### Vercel設定
+**現在の環境:**
+- ビルドリージョン: `iad1`（ワシントンD.C.、アメリカ東部）
+- Serverless Functions: `iad1`（アメリカ東部）
+- 設定状況: リージョン未指定（デフォルト）
+
+**日本リージョンに変更する場合:**
+```json
+// vercel.json
+{
+  "regions": ["hnd1"]
+}
+```
+
+**利用可能な日本リージョン:**
+- `hnd1` - 東京（羽田）- 推奨
+- `nrt1` - 東京（成田）
+- `kix1` - 大阪（関西）
+
+### Supabase設定
+**現在の環境:**
+- リージョン: `ap-northeast-1`（東京）✅
+- プロジェクトID: `fiwlltohirxtgbjfmlfo`
+- 状況: 日本環境で最適化済み
+
+### パフォーマンス最適化推奨事項
+1. **Vercelリージョン変更**: `vercel.json`で`hnd1`（東京羽田）を指定
+2. **メリット**: 日本ユーザー向けのレイテンシ大幅改善
+3. **現状**: Supabaseは既に東京、Vercelのみアメリカ東部
+
+## 最新の改善履歴
+
+### SETUP-GUIDE.md の改善
+- **動的プロジェクト名**: `PROJECT_NAME`環境変数での柔軟な命名
+- **命名規則**: 英数字・ハイフン、小文字開始
+- **自動設定**: Next.js、Supabase、GitHub全てで統一命名
+- **GitHub CLI対応**: `gh repo create`オプション追加
+
+### 環境分離の完成
+- **開発環境**: ローカルSupabase（127.0.0.1:54321）
+- **本番環境**: SupabaseCloud（ap-northeast-1）+ Vercel（iad1）
+- **自動切り替え**: 環境変数による透明な切り替え
